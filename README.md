@@ -4,7 +4,9 @@
 
 Several other libraries I have tried, such as [**preprocessor**](https://github.com/s/preprocessor) don't seem to work well with Russian text. Others such as [**pymorphy2**](https://github.com/kmike/pymorphy2) (on which this library is partly based) offer useful NLP morphological analysis but not preprocessing.
 
-**WIP** -- Some feature are not fully buit and tested at this time.
+Designed for Python 3.5
+
+**WIP** -- some feature are not fully buit and tested at this time.
 
 # installation
 
@@ -59,6 +61,7 @@ Parameters with defaults:
 
 
 **Check_word**
+
 The result of Check_word is a dictionary 
 ```javascript
 {'status':'ok OR empty','word':'clean word if applicable'}
