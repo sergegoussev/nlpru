@@ -1,0 +1,6 @@
+.spyproject
+.spyderproject
+.ini
+*.ini
+*.pyc
+experiments.py
