@@ -1,14 +1,22 @@
 # nlpru
 
-**nlpru** is a simple library to help conduct Natural Language Processing analysis of Russian text. It is built with Russian language social media data in mind.
+**nlpru** is a simple library to support Natural Language Processing analysis of Russian text. It is built with Russian language social media data in mind.
 
-Some other libraries, such as [**preprocessor**](https://github.com/s/preprocessor) don't seem to work well with Russian text. Hence this library is a WIP attempt to bridge this gap.
+Several other libraries I have tried, such as [**preprocessor**](https://github.com/s/preprocessor) don't seem to work well with Russian text. Others such as [**pymorphy2**](https://github.com/kmike/pymorphy2) (on which this library is partly based) offer useful NLP morphological analysis but not preprocessing.
 
-~WIP~
+**WIP** -- Some feature are not fully buit and tested at this time.
+
+# installation
+
+You can install this library via git from github directly: 
+
+    >>> pip install git+https://github.com/sergegoussev/nlpru.git
 
 # key methods
 
-There are two main methods built in at this point: *Clean* or preprocessing and *Semantics* or NLP methods -- right now only Semantic Similarity.
+There are two main methods built in at this point: *Clean* or preprocessing and *Semantics* to deterimine cosine similarity.
+
+To initiate either method, you first need to:
 
 ```python
 #import library
@@ -20,7 +28,7 @@ c = Clean()
 #initiate the Semantics method
 s = Semantics()
 ```
-## Semantics module
+## Semantics
 
 This module has one object with (currently) one method - the calculation of *cosine similarity* between documents. The method underlying it is tf-idf.
 
@@ -30,9 +38,9 @@ docs = [doc1, doc2]
 print(s.Get_similarity(doc))
 ```
 
-## Clean module
+## Clean
 
-Two Clean methods exist, one to clean the document (i.e. the tweet), and another to check whether the word should be included in subsequent bag-of-words analysis (for instance Frequency Distribution)
+Clean allows the preprocessing of text, with two methods availible: one to clean the document (i.e. the tweet or post), and another to check whether a word should be included in subsequent bag-of-words analysis -- to remove stop words, emojis, etc.
 
 **Clean_document**
 ```python
