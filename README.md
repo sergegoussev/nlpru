@@ -18,10 +18,6 @@ You can install this library via git from github directly:
 
     >>> pip install git+https://github.com/sergegoussev/nlpru.git
 
-Or you can download the repo zip, and then use pip in the folder:
-
-    >>> pip install .
-
 # quickstart
 
 Once installed, you can call each method you require by importing it from nlpru. For example, let's say you have some tweets to process:
@@ -33,13 +29,13 @@ from nlpru import Clean
 #initiate the Clean method
 c = Clean()
 
-tweet = "п***ц какое расследование,почему б не указать,что наш Самарский ио @D_Azaroff ,вот он не бот,можно обратиться напрямую,не откажет )))"
+tweet = "xxxxx"
 
 print(c.Clean_document(tweet, remove_swears=True))
 ```
 
-This will return 
-`"какое расследование, почему б не указать, что наш Самарский ио @DAzaroff, вот он не бот, можно обратиться напрямую, не откажет"`
+This will return `"yyyy"`
+
 
 # documentation and examples
 
