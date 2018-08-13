@@ -17,33 +17,48 @@ class Conversations:
                  quote_list):
         """
         @parameters:
-        - retweet_list - list of retweets in the manner of [('tweet id','retweeted tweet id'),...]
-        - reply_list - list of all replies in the manner of [('tweet id','replyng to tweet id'),...]
-        - quote_list - list of all times a quote is made, [('tweet id','quoting tweet id'),...]
+        - retweet_list - list of retweets in the manner of 
+            [('tweet id','retweeted tweet id'),...]
+        - reply_list - list of all replies in the manner of 
+            [('tweet id','replyng to tweet id'),...]
+        - quote_list - list of all times a quote is made in the manner of
+            [('tweet id','quoting tweet id'),...]
         """
-        self.replies = {each[0]:each[1] for each in reply_list}
-        self.quotes = {each[0]:each[1] for each in quote_list}
-        self.retweets = {each[0]:each[1] for each in retweet_list}
+        try:
+            self._replies = {each[0]:each[1] for each in reply_list}
+            self._quotes = {each[0]:each[1] for each in quote_list}
+            self._retweets = {each[0]:each[1] for each in retweet_list}
+        except Exception as e:
+            raise ConversationError("Improper input for Conversations:"+ str(e))
 
-    #----------------------main function---------------------------------------------------------
+    #----------------------main function---------------------------------------------
     def Recategorize_topics(self, tweet_list, change_topic_label, no_topic_label="NA"):
         """
         Check and recategorize the tweets NOT about the topic but should be
         
         @parameter:
-            - tweet_list - list of tweets with tuples, such as [('twtid','topic',...),...]
-                NOTE the first must be the tweet id, the second the topic label, further inputs are ignored and returned as is
-            - no_topic_label - what is the label of topics that have no label associated with them. 
+            - tweet_list - list of tweets with tuples, such as
+                    [('twtid','topic',...),...]
+                NOTE the first must be the tweet id, 
+                    the second the topic label, 
+                    further inputs are ignored and returned as is
+            - no_topic_label - what is the label of topics that have no label
+                    associated with them. 
                 default - 'NA'
         @returns: dict of tweets and their topics 
         """
-        self.change_topic_label = change_topic_label
+        self._change_topic_label = change_topic_label
         #first, just run the regular categorization and categorize based on keyword matches
         if len(tweet_list[0]) > 2:
-            self.initial_tweet_dict = {each[0]:{'topic':each[1],'other_params':[each[2:]]} for each in tweet_list}
+            self._initial_tweet_dict = {
+                    each[0]:{
+                            'topic':each[1],
+                            'other_params':[each[2:]]
+                            } for each in tweet_list
+                    }
         else:
             self.initial_tweet_dict = {each[0]:{'topic':each[1]} for each in tweet_list}
-        self.no_topic_label = no_topic_label
+        self._no_topic_label = no_topic_label
         return self._recategorize_mast_()
         
     #----------------------supporting functions---------------------------------------------------
@@ -52,17 +67,17 @@ class Conversations:
         main function that recagorizes tweets based on the initial input of tweets
         """
         #create a copy of the original tweet dict to work with
-        tweet_dict = self.initial_tweet_dict.copy()
+        tweet_dict = self._initial_tweet_dict.copy()
         i = 1
         while True:
             n_changed = 0
             #iterate over all the tweets in the master input dict
-            for tweet, value in self.initial_tweet_dict:
+            for tweet, value in self._initial_tweet_dict:
                 #only check and change the topic if the topic was NOT on the topic of interest
-                if value['topic'] == self.no_topic_label:
+                if value['topic'] == self._no_topic_label:
                     result = self._recategorize_check_tweet_(tweet)
                     if result == "change":
-                        tweet_dict[tweet]['topic'] == self.change_topic_label
+                        tweet_dict[tweet]['topic'] == self._change_topic_label
                         n_changed += 1
             print("{i} iteration completed, recategorized this round: {n}".format(i=i,n=n_changed))
             i += 1
@@ -94,6 +109,8 @@ class Conversations:
             if self.initial_tweet_dict[self.retweets[twtid]]['topic'] == self.change_topic_label:
                 result = "change"
         return result
+    
+    
     
 if __name__ == '__main__':
     pass

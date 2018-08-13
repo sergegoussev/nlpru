@@ -4,13 +4,19 @@ nlpru.topics
 """
 from nlpru import Cleaner
 
+
 class Topics:
     """
     To detect topics, choose a choise of method, and pass in the required inputs
     """
-    def __init__(self):
-        C = Cleaner()
-    
+    def __init__(self, tweet_list):
+        self._Cln = Cleaner()
+        self._tweet_dict = {
+                each[0]:{
+                        }
+                }
+        
+        
     def Keywords(self, tweet_list, topic_dict):
         final_list_of_tweets = []
         for tweet in tweet_list:

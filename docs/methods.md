@@ -75,6 +75,8 @@ To assign tweets topics, you can specify the keywords you want to categorize a t
 * dictionary_of_topics -- specify your topics as dictionary keys and the keywords that apply to this topic as list in the value. For ex:
     * `topic_dict = {'protests':['navalny','putin'],'assasination':['voronenkov']}`
 
+**NOTE**: *nlpru* assumes that you will not try to categorize topics of identical tweets -- and finds the `twtid` in the list_of_tweets (if you specify a `dataframe` input for instance)
+
 ## Add conversation affects to topics
 
 As tweets are not isolated in spacce but are usually part of a conversation thread, often with other tweets in a thread not using the listened to keywords, you can use this method to include conversation thread affects and categorize all *downstream* tweets as also on the parent tweet topic. 
