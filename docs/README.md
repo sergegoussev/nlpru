@@ -1,4 +1,4 @@
-[Home](../README.md) | [examples](../examples/README.md)
+[Home](../README.md) | Documentation | [Examples](examples/README.md)[examples](../examples/README.md)
 
 # welcome to the *nlpru* documenation
 
@@ -11,7 +11,7 @@ The *nplru* library is not yet availible via *Pypi*, hence to install it, it has
 ## Methods
 
 The following methods are availible:
-* [Semantics](methods.md#Semantics)
-* [Preprocessing](methods.md#Preprocessing)
-* [Topic Analysis](methods.md#Topic Analysis)
-* [Adding Conversation thread effects to Topic Analysis](methods/#Add conversation affects to topics)
+* [Semantics](methods.md#semantics)
+* [Preprocessing](methods.md#rpeprocessing)
+* [Topic Analysis](methods.md#topicanalysis)
+* [Adding Conversation thread effects to Topic Analysis](methods/#addconversationaffectstotopics)

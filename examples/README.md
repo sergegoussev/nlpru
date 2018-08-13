@@ -1,4 +1,4 @@
- [Home](../README.md) | [documentation](../docs/README.md)
+ [Home](../README.md) | [Documentation](../docs/README.md) | Examples
 
 # Examples and explantions of the library
 

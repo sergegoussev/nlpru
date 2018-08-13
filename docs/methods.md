@@ -1,4 +1,4 @@
-[Home](../README.md) | [examples](../examples/README.md)
+[Home](../README.md) |  [Documentation](README.md) |[Examples](../examples/README.md)
 
 # Methods walkthrough
 
