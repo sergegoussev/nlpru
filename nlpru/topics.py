@@ -4,7 +4,7 @@ nlpru.topics
 """
 from nlpru import Cleaner
 
-class Detect_topics:
+class Topics:
     """
     To detect topics, choose a choise of method, and pass in the required inputs
     """

@@ -1,10 +1,14 @@
+[Documentation](docs/README.md) | [examples](examples/README.md)
+
 # nlpru
 
-**nlpru** is a simple library to support Natural Language Processing analysis of Russian text. It is built with Russian language social media data in mind.
+**nlpru** is a library meant to simplify Natural Language Processing and analysis of Russian text. It is built with Russian language social media data in mind, specifically *twitter*.
 
-Several other libraries I have tried, such as [**preprocessor**](https://github.com/s/preprocessor) don't seem to work well with Russian text. Others such as [**pymorphy2**](https://github.com/kmike/pymorphy2) (on which this library is partly based) offer useful NLP morphological analysis but not preprocessing.
+The library makes it easy to use several methods commonly used with *natural language processsing*, such as categorizing tweets by topic, preprocessing (or cleaning text), etc. While several other libraries exist that can do many of these things, I found that general ones such as [**preprocessor**](https://github.com/s/preprocessor) don't seem to work well with Russian text. Russian specific libraries, such as [**pymorphy2**](https://github.com/kmike/pymorphy2) (which **nlpru** uses behind the scenes) offer useful NLP morphological analysis but not preprocessing or facilitation of different types of analysis.
 
 Designed for Python 3.5
+
+*Author*: @sergegoussev
 
 **WIP** -- some feature are not fully buit and tested at this time.
 
@@ -14,9 +18,13 @@ You can install this library via git from github directly:
 
     >>> pip install git+https://github.com/sergegoussev/nlpru.git
 
+Or you can download the repo zip, and then use pip in the folder:
+
+    >>> pip install .
+
 # quickstart
 
-There are two main methods built in at this point: *Clean* or preprocessing and *Semantics* to deterimine cosine similarity.
+Once installed, you can call each method you require by importing it from nlpru. For example, let's say you have some data to preprocess, 
 
 To initiate either method, you first need to:
 

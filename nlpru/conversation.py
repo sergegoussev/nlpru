@@ -2,9 +2,9 @@
 """
 nlpru.conversation
 """
+from __future__ import print_function
 
-
-class ConversationTopicer:
+class Conversations:
     """
     ConversationTopicer changes the topic of tweets not categorized about a topic to the topic by 
     checking the conversation thread affects.  
@@ -24,7 +24,7 @@ class ConversationTopicer:
         self.retweets = {each[0]:each[1] for each in retweet_list}
 
     #----------------------main function---------------------------------------------------------
-    def Recategorize_one_topic(self, tweet_list, change_topic_label, no_topic_label="NA"):
+    def Recategorize_topics(self, tweet_list, change_topic_label, no_topic_label="NA"):
         """
         Check and recategorize the tweets NOT about the topic but should be
         

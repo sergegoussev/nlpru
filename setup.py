@@ -16,7 +16,6 @@ setup(name='nlpru',
       license='MIT',
       packages=find_packages(exclude=['experiments.*','*.experiments*','*experiments*']),
       install_requires=[
-              'pysqlc',
               'pymorphy2',
               'nltk',
               'emoji',

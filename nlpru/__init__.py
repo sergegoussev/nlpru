@@ -8,5 +8,6 @@ __licence__ = 'MIT'
 
 from nlpru.clean import Cleaner
 from nlpru.semantics import Semantics
-from nlpru.topics import Detect_topics
-from nltpur.conversation import ConversationTopicer
+from nlpru.topics import Topics
+from nlpru.conversation import Conversations
+from nlpru.error import nlpruError, ConversationError, TopicModelError

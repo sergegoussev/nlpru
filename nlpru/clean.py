@@ -77,12 +77,16 @@ class Cleaner:
         if remove_emoji == True:
             doc = re.sub(emojis, '', doc) #emojis version
         if remove_swears == True:
-            doc = re.sub('твою мать','',doc)
+            doc = re.sub('твою мать','',doc, re.IGNORECASE)
             for swear in swears:
-                doc = re.sub(swear, '', doc)
+                doc = re.sub(swear, '', doc, re.IGNORECASE)
         if remove_special_chars == True:
-            doc = re.sub("""[→©ђ°ѓ¡|\|=/▶►,‼?~é̄̃`.«»;џ�_●@▪™“„#ї*&%¿$\-!\\:\"\”<>'|/,?~`.\+\：«»;_“„*&%$!`^№€…)(—]""",'',doc)
-        doc = re.sub('\n','.', doc) #remove white spaces, i.e. new lines          
+            doc = re.sub("""[→©ђ°ѓ¡|\|=/▶►‼?~é̄̃`«»;џ�_●@▪™“„#ї*&%¿$\-\”<>'|/?~`\+\：«»;_“„&^№€…)(—]""",'',doc)
+        doc = re.sub('\n','.', doc) #remove white spaces, i.e. new lines  
+        doc = re.sub(' +',' ', doc) #remove extra spaces       
+        #validate that spaces that should exist actually exist
+        for character in [',',r'\.',r'\?',r'!',r':',r';']:
+            doc = re.sub(character, character+' ', doc)
         return doc
 
 
@@ -158,5 +162,9 @@ class Cleaner:
 
 if __name__ == '__main__':
     C = Cleaner()
-    print(C.Clean_document("place text here"))
+    tweet = """п***ц какое расследование,почему б не указать,что наш Самарский ио @D_Azaroff 
+    ,вот он не бот,можно обратиться напрямую,не откажет \xF0\x9F\x98\x81
+    """
+    tweet2 = "п***ц какое расследование,почему"
+    print(C.Clean_document(tweet, remove_swears=True))
     
