@@ -73,7 +73,8 @@ class ConversationTopicer:
         """
         check the tweet that is inputted as about the applicable rules
         """
-        #default 'result' of the check is None. If a match is made with any of the convo links, then 'result' is updated. 
+        #default 'result' of the check is None. If a match is made with any of the convo links, 
+        #then 'result' is updated. 
         result = None
         #check replies -- if this tweet was a reply to the other tweet
         if twtid in self.replies and self.replies[twtid] in self.initial_tweet_dict:
