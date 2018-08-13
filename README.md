@@ -14,7 +14,7 @@ You can install this library via git from github directly:
 
     >>> pip install git+https://github.com/sergegoussev/nlpru.git
 
-# key methods
+# quickstart
 
 There are two main methods built in at this point: *Clean* or preprocessing and *Semantics* to deterimine cosine similarity.
 
@@ -85,3 +85,9 @@ Parameters with defaults:
 * remove_proper_nouns = True
 * allow_acronyms = False 
 * exclude_english_words = True
+
+# documentation and examples
+
+To have a fuller explanation of the availible methods, check out:
+* [the documentation](docs/README.md)
+* [examples and walkthroughs](examples/README.md)
