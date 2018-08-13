@@ -81,12 +81,14 @@ class Cleaner:
             for swear in swears:
                 doc = re.sub(swear, '', doc, re.IGNORECASE)
         if remove_special_chars == True:
-            doc = re.sub("""[→©ђ°ѓ¡|\|=/▶►‼?~é̄̃`«»;џ�_●@▪™“„#ї*&%¿$\-\”<>'|/?~`\+\：«»;_“„&^№€…)(—]""",'',doc)
+            doc = re.sub("""[→©ђ°ѓ¡|\|=/▶►‼?~é̄̃`«»;џ�_●▪™“„#ї*&%¿$\-\”<>'|/?~`\+\：«»;_“„&^№€…)(—]""",'',doc)
         doc = re.sub('\n','.', doc) #remove white spaces, i.e. new lines  
-        doc = re.sub(' +',' ', doc) #remove extra spaces       
         #validate that spaces that should exist actually exist
         for character in [',',r'\.',r'\?',r'!',r':',r';']:
+            doc = re.sub(' '+character, character, doc)
             doc = re.sub(character, character+' ', doc)
+        doc = re.sub(' +',' ', doc) #remove extra spaces
+        doc = doc.strip()
         return doc
 
 
@@ -162,9 +164,8 @@ class Cleaner:
 
 if __name__ == '__main__':
     C = Cleaner()
-    tweet = """п***ц какое расследование,почему б не указать,что наш Самарский ио @D_Azaroff 
-    ,вот он не бот,можно обратиться напрямую,не откажет \xF0\x9F\x98\x81
+    tweet = """п***ц какое расследование,почему б не указать,что наш Самарский ио @D_Azaroff ,вот он не бот,можно обратиться напрямую,не откажет \xF0\x9F\x98\x81
     """
     tweet2 = "п***ц какое расследование,почему"
-    print(C.Clean_document(tweet, remove_swears=True))
+    print(C.Clean_document(tweet, remove_swears=True, remove_mentions=False))
     

@@ -24,9 +24,7 @@ Or you can download the repo zip, and then use pip in the folder:
 
 # quickstart
 
-Once installed, you can call each method you require by importing it from nlpru. For example, let's say you have some data to preprocess, 
-
-To initiate either method, you first need to:
+Once installed, you can call each method you require by importing it from nlpru. For example, let's say you have some tweets to process:
 
 ```python
 #import library
@@ -35,8 +33,10 @@ from nlpru import Clean
 #initiate the Clean method
 c = Clean()
 
-#initiate the Semantics method
-s = Semantics()
+tweet = "п***ц какое расследование,почему б не указать,что наш Самарский ио @D_Azaroff ,вот он не бот,можно обратиться напрямую,не откажет )))"
+
+print(c.Clean_document(tweet, remove_swears=True))
+> "какое расследование, почему б не указать, что наш Самарский ио @DAzaroff, вот он не бот, можно обратиться напрямую, не откажет"
 ```
 
 # documentation and examples

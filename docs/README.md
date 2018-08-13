@@ -16,3 +16,4 @@ The following methods are availible:
 * Semantics
 * Preprocessing
 * Topic Analysis
+* Adding Conversation thread effects to Topic Analysis
