@@ -6,15 +6,17 @@ The following walks through the methods availible
 
 ## Semantics
 
-This module has one object with (currently) one method - the calculation of *cosine similarity* between documents. The method underlying it is tf-idf.
+If you want to determine *cosine similarity* between documents, you can use this method. You can use this for two tweets, two sets of tweets concatenated into 2 strings, or really any 2 string objects. The method underlying it is tf-idf.
 
 ```python
+from nlpru import Similarity
+s = Similiarity()
 
 docs = [doc1, doc2]
 print(s.Get_similarity(doc))
 ```
 
-## Clean
+## Preprocessing
 
 Clean allows the preprocessing of text, with two methods availible: one to clean the document (i.e. the tweet or post), and another to check whether a word should be included in subsequent bag-of-words analysis -- to remove stop words, emojis, etc.
 
@@ -59,3 +61,22 @@ Parameters with defaults:
 * remove_proper_nouns = True
 * allow_acronyms = False 
 * exclude_english_words = True
+
+## Topic Analysis
+
+To assign tweets topics, you can specify the keywords you want to categorize a topic to, and *nlpru* will take care of the tagging for you. 
+
+@input parameters:
+* list_of_tweets -- input the tweets as a list. As for subsequent analysis you likely will want to get back the `tweet id`, a list of tuples, containg tweets and other variables is acceptable. 
+    * in this case, specify the *tweet_location_in_tuple* parameter;
+* tweet_location_in_tuple -- specify the integer location of the tweet within the each tuple -- for ex:
+    * `list_of_tweets = [('twtid','twt_text),...], tweet_location_in_tuple=1`
+    * **default**: `None`
+* dictionary_of_topics -- specify your topics as dictionary keys and the keywords that apply to this topic as list in the value. For ex:
+    * `topic_dict = {'protests':['navalny','putin'],'assasination':['voronenkov']}`
+
+## Add conversation affects to topics
+
+As tweets are not isolated in spacce but are usually part of a conversation thread, often with other tweets in a thread not using the listened to keywords, you can use this method to include conversation thread affects and categorize all *downstream* tweets as also on the parent tweet topic. 
+    
+See [jupyter notebook walkthrough](../examples/Categorizing_by_topic_using_conversation_threads.ipynb) for a full explanation of the method.

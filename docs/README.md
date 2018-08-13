@@ -6,14 +6,12 @@ WIP
 
 ## Installation
 
+The *nplru* library is not yet availible via *Pypi*, hence to install it, it has to be downloaded from this gitab repository. This means there are two ways to do it
+
 ## Methods
 
-For a full list of methods, [click here](methods.md)
-
-**Overview**:
-
 The following methods are availible:
-* Semantics
-* Preprocessing
-* Topic Analysis
-* Adding Conversation thread effects to Topic Analysis
+* [Semantics](methods.md#Semantics)
+* [Preprocessing](methods.md#Preprocessing)
+* [Topic Analysis](methods.md#Topic Analysis)
+* [Adding Conversation thread effects to Topic Analysis](methods/#Add conversation affects to topics)
