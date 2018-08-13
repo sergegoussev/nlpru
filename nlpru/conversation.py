@@ -3,6 +3,8 @@
 nlpru.conversation
 """
 from __future__ import print_function
+from nlpru.error import ConversationError
+
 
 class Conversations:
     """
