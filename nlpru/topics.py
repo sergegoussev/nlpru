@@ -4,6 +4,7 @@ nlpru.topics
 """
 from nlpru import Cleaner
 from nlpru import InputError
+from nltk.tokenize import word_tokenize
 
 class FindTopics:
     """
@@ -66,14 +67,25 @@ class FindTopics:
     def Keyword_Match(self, topic_dict):
         final_list_of_tweets = []
         for tweet in self._tweet_dict:
+            clean_words = self.__check_words_in_doc__(self._tweet_dict[tweet]['text'])
             for topic in topic_dict:
-                clean_words = __check_words_in_doc__(tweet[0])
-                if len(set(keywords).intersection(clean_words)) != 0:
-                    topic = "Protests"
+                if len(set(topic_dict[topic]).intersection(clean_words)) != 0:
+                    topic = topic
                 else:
                     topic = "others"
                 final_list_of_tweets.append()
-                
+
+    def __check_words_in_doc__(self, document):
+        """
+        isolate the checking of words from a document into a separate function
+        (for easier use later)
+        """
+        words = []
+        for word in word_tokenize(document):
+            result = self.C.Check_word(word, remove_proper_nouns=False)
+            if result['status'] == 'ok':
+                words.append(result['word'])
+        return words
                 
 
 if __name__ == '__main__':
