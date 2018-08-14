@@ -21,3 +21,9 @@ class TopicModelError(nlpruError):
     Error handler for Topic modeling/by topic document categorization
     """
     pass
+
+class InputError(nlpruError):
+    """
+    Error handler for improper input into the any of the library functions/objects
+    """
+    pass

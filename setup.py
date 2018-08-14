@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(name='nlpru',
       version='0.1.2',
       description='simple Russian Natural language Processing library for python',
-      long_description=open('README.md').read(),
+      long_description=open('README.md', encoding="utf-8").read(),
       classifiers=[
         'Development Status :: WIP',
         'License :: MIT License',

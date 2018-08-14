@@ -29,13 +29,14 @@ from nlpru import Clean
 #initiate the Clean method
 c = Clean()
 
-tweet = "xxxxx"
+tweet = """п***ц какое расследование,почему б не указать,что наш Самарский ио @D_Azaroff
+ ,вот он не бот,можно обратиться напрямую,не откажет"""
 
 print(c.Clean_document(tweet, remove_swears=True))
 ```
 
-This will return `"yyyy"`
-
+This will return: 
+`"какое расследование, почему б не указать, что наш Самарский ио @DAzaroff, вот он не бот, можно обратиться напрямую, не откажет"`
 
 # documentation and examples
 
