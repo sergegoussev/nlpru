@@ -1,4 +1,4 @@
-Home | [Documentation](docs/README.md) | [Examples](examples/README.md)
+Home | [Documentation](docs/README.md) | [Methods](../docs/methods.md) | [Examples](examples/README.md)
 
 # nlpru
 

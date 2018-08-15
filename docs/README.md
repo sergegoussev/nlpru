@@ -1,4 +1,4 @@
-[Home](../README.md) | Documentation | [Examples](../examples/README.md)
+[Home](../README.md) | Documentation  | [Methods](methods.md) | [Examples](../examples/README.md)
 
 # welcome to the *nlpru* documenation
 
@@ -28,4 +28,4 @@ Browse [all methods](methods.md), or select a specific one:
 * [Semantics](methods.md#semantics)
 * [Preprocessing](methods.md#preprocessing)
 * [Topic Analysis](methods.md#topic-analysis)
-* [Adding Conversation thread effects to Topic Analysis](methods/#add-conversation-affects-to-topics) 
+* [Adding Conversation thread effects to Topic Analysis](methods.md#add-conversation-affects-to-topics) 
