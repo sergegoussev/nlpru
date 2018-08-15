@@ -4,17 +4,14 @@ nlpru.conversation
 """
 from __future__ import print_function
 from nlpru.error import ConversationError
-
+from nlpru.models import validate_tweet_input
 
 class Conversations:
     """
-    ConversationTopicer changes the topic of tweets not categorized about a topic to the topic by 
-    checking the conversation thread affects.  
+    ConversationTopicer changes the topic of tweets not categorized about a topic 
+    to the topic by checking the conversation thread affects.  
     """
-    def __init__(self, 
-                 retweet_list,
-                 reply_list, 
-                 quote_list):
+    def __init__(self, **kwargs):
         """
         @parameters:
         - retweet_list - list of retweets in the manner of 
@@ -24,15 +21,30 @@ class Conversations:
         - quote_list - list of all times a quote is made in the manner of
             [('tweet id','quoting tweet id'),...]
         """
+        self._validate_input_(self, kwargs)
+            
+    def _validate_input_(self, kwargs):
+        """
+        Validate and convert the vars that were created
+        """
         try:
-            self._replies = {each[0]:each[1] for each in reply_list}
-            self._quotes = {each[0]:each[1] for each in quote_list}
-            self._retweets = {each[0]:each[1] for each in retweet_list}
+            if 'retweet_list' in kwargs:
+                self._retweets = {each[0]:each[1] for each in kwargs['retweet_list']}
+            else:
+                self._retweets = None
+            if 'quote_list' in kwargs:
+                self._quotes = {each[0]:each[1] for each in kwargs['quote_list']}
+            else:
+                self._quotes = None
+            if 'reply_list' in kwargs:
+                self._replies = {each[0]:each[1] for each in kwargs['reply_list']}
+            else:
+                self._replies = None
         except Exception as e:
-            raise ConversationError("Improper input for Conversations:"+ str(e))
+            raise ConversationError("Improper input for Conversations:"+ str(e))           
 
     #----------------------main function---------------------------------------------
-    def Recategorize_topics(self, tweet_list, change_topic_label, no_topic_label="NA"):
+    def Recategorize_topics(self, change_topic_label, no_topic_label="NA", **kwargs):
         """
         Check and recategorize the tweets NOT about the topic but should be
         
@@ -48,20 +60,11 @@ class Conversations:
         @returns: dict of tweets and their topics 
         """
         self._change_topic_label = change_topic_label
-        #first, just run the regular categorization and categorize based on keyword matches
-        if len(tweet_list[0]) > 2:
-            self._initial_tweet_dict = {
-                    each[0]:{
-                            'topic':each[1],
-                            'other_params':[each[2:]]
-                            } for each in tweet_list
-                    }
-        else:
-            self.initial_tweet_dict = {each[0]:{'topic':each[1]} for each in tweet_list}
         self._no_topic_label = no_topic_label
+        self._tweet_dict = validate_tweet_input(kwargs)
         return self._recategorize_mast_()
         
-    #----------------------supporting functions---------------------------------------------------
+    #----------------------supporting functions-----------------------------------------
     def _recategorize_mast_(self):
         """
         main function that recagorizes tweets based on the initial input of tweets
@@ -113,4 +116,21 @@ class Conversations:
     
     
 if __name__ == '__main__':
-    pass
+    tweet_dict = {
+                '1':{'text':'вот почему б не указать'},
+                '2':{'text':"наш Самарский расследование"},
+                '3':{'text':"вот он не бот"},
+                '4':{'text':'можно обратиться напрямую'},
+                '5':{'text':"какое расследование"},
+                '6':{'text':'обратиться ... напрямую'},
+                }
+    topic_dict = {
+                "topic 1":["почему", "наш"],
+                "topic 2":["расследование","какой"]
+                }
+    replies = [('6','1')]
+    c = Conversations(reply_list=replies)
+#    t = c.Recategorize_topics()
+    
+    
+    
