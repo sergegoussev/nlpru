@@ -85,7 +85,7 @@ class Conversations:
         main function that recagorizes tweets based on the initial input of tweets
         """
         #create a copy of the original tweet dict to work with
-        tweet_dict = self._tweet_dict.copy()
+#        tweet_dict = self._tweet_dict.copy()
         i = 1
         while True:
             n_changed = 0
@@ -93,16 +93,21 @@ class Conversations:
             for tweet, value in self._tweet_dict.items():
                 #only check and change the topic if the topic was NOT on the topic of interest
                 if value['topic'] == self._no_topic_label:
+                    print("entered check for ", tweet)
                     result = self._recategorize_check_tweet_(tweet)
+                    print(result)
                     if result == "change":
-                        tweet_dict[tweet]['topic'] == self._change_topic_label
+                        print("updating dict", self._change_topic_label)
+                        self._tweet_dict[tweet]['topic'] == self._change_topic_label
+                        print(self._tweet_dict[tweet]['topic'])
                         n_changed += 1
             print("{i} iteration completed, recategorized this round: {n}".format(i=i,n=n_changed))
             i += 1
+            break
             #if no more tweets are being changed, exit the loop
             if n_changed == 0:
                 break
-        return tweet_dict
+        return self._tweet_dict
     
     def _recategorize_check_tweet_(self, twtid):
         """
@@ -112,10 +117,11 @@ class Conversations:
         #then 'result' is updated. 
         result = None
         #check replies -- if this tweet was a reply to the other tweet
-        
         if twtid in self._replies and self._replies[twtid] in self._tweet_dict:
+            print("entered replies")
             #check if the topic of the replied to tweet was on the topic we are listening to
             if self._tweet_dict[self._replies[twtid]]['topic'] == self._change_topic_label:
+                print("changing topic")
                 result = "change"
         #check quotes -- if this tweet quoted another tweet
         if twtid in self._quotes and self._quotes[twtid] in self._tweet_dict:
@@ -128,7 +134,6 @@ class Conversations:
             if self._tweet_dict[self._retweets[twtid]]['topic'] == self._change_topic_label:
                 result = "change"
         return result
-    
     
     
 if __name__ == '__main__':
