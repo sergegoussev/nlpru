@@ -35,7 +35,7 @@ class FindTopics:
         for tweet in self._tweet_dict:
             clean_words = self.__clean_words__(self._tweet_dict[tweet]['text'])
             self._tweet_dict[tweet]['clean_words'] = clean_words
-            topic = "none_detected"
+            topic = "none detected"
             num_assigned = 0
             for each_topic in topic_dict:
 #                print(each_topic, tweet)

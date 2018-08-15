@@ -21,7 +21,7 @@ class Conversations:
         - quote_list - list of all times a quote is made in the manner of
             [('tweet id','quoting tweet id'),...]
         """
-        self._validate_input_(self, kwargs)
+        self._validate_input_(kwargs)
             
     def _validate_input_(self, kwargs):
         """
@@ -31,32 +31,47 @@ class Conversations:
             if 'retweet_list' in kwargs:
                 self._retweets = {each[0]:each[1] for each in kwargs['retweet_list']}
             else:
-                self._retweets = None
+                self._retweets = []
             if 'quote_list' in kwargs:
                 self._quotes = {each[0]:each[1] for each in kwargs['quote_list']}
             else:
-                self._quotes = None
+                self._quotes = []
             if 'reply_list' in kwargs:
                 self._replies = {each[0]:each[1] for each in kwargs['reply_list']}
             else:
-                self._replies = None
+                self._replies = []
         except Exception as e:
             raise ConversationError("Improper input for Conversations:"+ str(e))           
 
     #----------------------main function---------------------------------------------
-    def Recategorize_topics(self, change_topic_label, no_topic_label="NA", **kwargs):
+    def Recategorize_topics(self, 
+                            change_topic_label, 
+                            no_topic_label="none detected",
+                            **kwargs):
         """
         Check and recategorize the tweets NOT about the topic but should be
         
-        @parameter:
-            - tweet_list - list of tweets with tuples, such as
-                    [('twtid','topic',...),...]
-                NOTE the first must be the tweet id, 
-                    the second the topic label, 
-                    further inputs are ignored and returned as is
+        @parameters:
             - no_topic_label - what is the label of topics that have no label
                     associated with them. 
-                default - 'NA'
+                default - 'none detected'
+            - change_topic_label - what is the label you want to check for?
+                for ex: change_topic_lable = 'topic 1'
+                
+        @other parameters - tweets
+            If you are inputting a list of tuples:
+            - tweet_list -- specify list of tweets to categorize
+            - tweet_text_index -- specify the index of the tweet text in the tuple;
+                i.e. 0 for 1st, etc...
+            - tweet_id_index -- specify the index of the tweet id (or unique tweet) 
+                identifier.
+            
+            If you are inputting a dictionary of tweets, then the parameter should be:
+            - tweet_dict - dictionary of tweets by twtid as the key
+                - NOTE: the following dict is expected:
+                    {'twtid':{'text':'bla bla bla ... ',...},....}
+                    
+
         @returns: dict of tweets and their topics 
         """
         self._change_topic_label = change_topic_label
@@ -70,12 +85,12 @@ class Conversations:
         main function that recagorizes tweets based on the initial input of tweets
         """
         #create a copy of the original tweet dict to work with
-        tweet_dict = self._initial_tweet_dict.copy()
+        tweet_dict = self._tweet_dict.copy()
         i = 1
         while True:
             n_changed = 0
             #iterate over all the tweets in the master input dict
-            for tweet, value in self._initial_tweet_dict:
+            for tweet, value in self._tweet_dict.items():
                 #only check and change the topic if the topic was NOT on the topic of interest
                 if value['topic'] == self._no_topic_label:
                     result = self._recategorize_check_tweet_(tweet)
@@ -97,25 +112,27 @@ class Conversations:
         #then 'result' is updated. 
         result = None
         #check replies -- if this tweet was a reply to the other tweet
-        if twtid in self.replies and self.replies[twtid] in self.initial_tweet_dict:
+        
+        if twtid in self._replies and self._replies[twtid] in self._tweet_dict:
             #check if the topic of the replied to tweet was on the topic we are listening to
-            if self.initial_tweet_dict[self.replies[twtid]]['topic'] == self.change_topic_label:
+            if self._tweet_dict[self._replies[twtid]]['topic'] == self._change_topic_label:
                 result = "change"
         #check quotes -- if this tweet quoted another tweet
-        if twtid in self.quotes and self.quotes[twtid] in self.initial_tweet_dict:
+        if twtid in self._quotes and self._quotes[twtid] in self._tweet_dict:
             #now check if the topic of the quoted tweet was on the topic of interest 
-            if self.initial_tweet_dict[self.quotes[twtid]]['topic'] == self.change_topic_label:
+            if self._tweet_dict[self._quotes[twtid]]['topic'] == self._change_topic_label:
                 result = "change"
         #check retweets -- if this tweet retweeted another tweet
-        if twtid in self.retweets and self.retweets[twtid] in self.initial_tweet_dict:
+        if twtid in self._retweets and self._retweets[twtid] in self._tweet_dict:
             #if the retweeted tweet was on the topic, then change the retweeting tweet topic
-            if self.initial_tweet_dict[self.retweets[twtid]]['topic'] == self.change_topic_label:
+            if self._tweet_dict[self._retweets[twtid]]['topic'] == self._change_topic_label:
                 result = "change"
         return result
     
     
     
 if __name__ == '__main__':
+    from nlpru import FindTopics
     tweet_dict = {
                 '1':{'text':'вот почему б не указать'},
                 '2':{'text':"наш Самарский расследование"},
@@ -129,8 +146,12 @@ if __name__ == '__main__':
                 "topic 2":["расследование","какой"]
                 }
     replies = [('6','1')]
+    
+    T = FindTopics(tweet_dict=tweet_dict)
+    r = T.Keyword_Match(topic_dict)
+    
     c = Conversations(reply_list=replies)
-#    t = c.Recategorize_topics()
+    t = c.Recategorize_topics(change_topic_label="topic 1", tweet_dict=tweet_dict)
     
     
     
