@@ -6,7 +6,7 @@ contains all cleaners, and misc functions required by other functions within the
 """
 from nlpru.error import InputError
 
-def validate_tweet_input(kwargs):
+def Convert_to_tweet_dictionary(**kwargs):
     '''
     Validate the input used in the initiation of the object
     '''
@@ -41,6 +41,8 @@ def validate_tweet_input(kwargs):
                             }
             except Exception as e:
                 raise InputError("Improper tweet_list inputted")
+        else:
+            raise InputError("Improper tweet input, please either input tweet list or tweet dictionary")
 
 
 if __name__ == '__main__':

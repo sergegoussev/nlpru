@@ -4,7 +4,7 @@ nlpru.conversation
 """
 from __future__ import print_function
 from nlpru.error import ConversationError
-from nlpru.models import validate_tweet_input
+from nlpru.models import Convert_to_tweet_dictionary
 
 class Conversations:
     """
@@ -76,7 +76,7 @@ class Conversations:
         """
         self._topic_for_which_to_check = topic_for_which_to_check
         self._no_topic_label = no_topic_label
-        self._tweet_dict = validate_tweet_input(kwargs)
+        self._tweet_dict = Convert_to_tweet_dictionary(**kwargs)
         return self._recategorize_mast_()
         
     #----------------------supporting functions-----------------------------------------

@@ -10,4 +10,5 @@ from nlpru.clean import Cleaner
 from nlpru.semantics import Semantics
 from nlpru.topics import FindTopics
 from nlpru.conversation import Conversations
+from nlpru.models import Convert_to_tweet_dictionary
 from nlpru.error import nlpruError, ConversationError, TopicModelError, InputError

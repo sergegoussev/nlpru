@@ -24,8 +24,13 @@ Or you can download the repo zip, and then use pip in the folder:
 
 ## Methods
 
-Browse [all methods](methods.md), or select a specific one: 
+Browse [all methods](methods.md), or select a specific one.
+
+Main methods:
 * [Semantics](methods.md#semantics)
 * [Preprocessing](methods.md#preprocessing)
 * [Topic Analysis](methods.md#topic-analysis)
 * [Adding Conversation thread effects to Topic Analysis](methods.md#add-conversation-affects-to-topics) 
+
+Supporting methods:
+* [Convert tweet in various inputs into a dictionary](methods.md#convert-to-tweet-dictionary)

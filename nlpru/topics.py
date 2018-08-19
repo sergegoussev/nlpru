@@ -4,7 +4,7 @@ nlpru.topics
 """
 from __future__ import print_function
 from nlpru.clean import Cleaner
-from nlpru.models import validate_tweet_input
+from nlpru.models import Convert_to_tweet_dictionary
 
 from nltk.tokenize import word_tokenize
 
@@ -28,7 +28,7 @@ class FindTopics:
                     {'twtid':{'text':'bla bla bla ... ',...},....}
         """
         self._Cln = Cleaner()
-        self._tweet_dict = validate_tweet_input(kwargs)
+        self._tweet_dict = Convert_to_tweet_dictionary(**kwargs)
  
     #--------Methods-------------------------------------------------------------------------
     def Keyword_Match(self, topic_dict):

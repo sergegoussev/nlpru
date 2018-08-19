@@ -38,12 +38,20 @@ Parameters with defaults:
 
 **Check_word**
 
-The result of Check_word is a dictionary 
-```javascript
-{'status':'ok OR empty','word':'clean word if applicable'}
+```python
+from nltk.tokenize import word_tokenize 
+raw = "Все говорят забудь его, забудь... а вот вы можете ..."
+
+for word in word_tokenize(raw):
+    c.Check_word(word)
 ```
 
-Usage as follows:
+Check_word returns a dictionary with a logical test: 
+```javascript
+{'status':'ok OR empty','word':'clean word if applicable or NA'}
+```
+
+For example:
 ```python
 word = "твердил"
 result = c.Check_word(word)
@@ -75,10 +83,72 @@ To assign tweets topics, you can specify the keywords you want to categorize a t
 * dictionary_of_topics -- specify your topics as dictionary keys and the keywords that apply to this topic as list in the value. For ex:
     * `topic_dict = {'protests':['navalny','putin'],'assasination':['voronenkov']}`
 
+For example: 
+
+```python
+from nlpru import FindTopics
+
+tweet_dict = {
+            '1':{'text':'вот почему б не указать'},
+            '2':{'text':"наш Самарский расследование"},
+            '3':{'text':"вот он не бот"},
+            '4':{'text':'можно обратиться напрямую'},
+            '5':{'text':"какое расследование"}
+            }
+topic_dict = {
+            "topic 1":["почему", "наш"],
+            "topic 2":["расследование","какой"]
+            }
+
+#first call the overall method and give it the tweets as input
+T = FindTopics(tweet_dict=tweet_dict) 
+            
+#now categorize the tweets by the keyword topic assigned
+r = T.Keyword_Match(topic_dict)
+```
+    
 **NOTE**: *nlpru* assumes that you will not try to categorize topics of identical tweets -- and finds the `twtid` in the list_of_tweets (if you specify a `dataframe` input for instance)
 
 ## Add conversation affects to topics
 
 As tweets are not isolated in spacce but are usually part of a conversation thread, often with other tweets in a thread not using the listened to keywords, you can use this method to include conversation thread affects and categorize all *downstream* tweets as also on the parent tweet topic. 
+
+For example, first find topics using the `FindTopics` method, then use the output dict to:
+
+```python
+from nlpru import Conversations
+
+replies = [('6','1')]
     
-See [jupyter notebook walkthrough](../examples/Categorizing_by_topic_using_conversation_threads.ipynb) for a full explanation of the method.
+c = Conversations(reply_list=replies)
+t = c.Recategorize_topics(topic_for_which_to_check="topic 1", tweet_dict=tweet_dict)
+```
+    
+For a full walkthrouh of the reasons why conversation thread affects need to be checked, see  [jupyter notebook walkthrough](../examples/Categorizing_by_topic_using_conversation_threads.ipynb).
+
+## Convert to tweet dictionary
+
+**nlpru** uses a dictionary method to process tweets -- both to categorize the topics and to assess conversation thread affects. For this it uses a dictionary structure:
+
+```
+tweet_dict = {
+            '1':{'text':'вот почему б не указать'},
+            '2':{'text':"наш Самарский расследование"},
+            '3':{'text':"вот он не бот"},
+            '4':{'text':'можно обратиться напрямую'},
+            '5':{'text':"какое расследование"}
+            }
+```
+
+While the method is built into others, if you want to call it separately, you can also do that:
+
+```python
+from nlpru import Convert_to_tweet_dictionary
+
+tweet_dict = Convert_to_tweet_dictionary(
+    tweet_list=[], 
+    tweet_text_index=1,
+    tweet_id_index=0)
+```
+
+This method can also validate that your `tweet_dict` is constructed correctly.
