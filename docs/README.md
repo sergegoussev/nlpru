@@ -33,4 +33,4 @@ Main methods:
 * [Adding Conversation thread effects to Topic Analysis](methods.md#add-conversation-affects-to-topics) 
 
 Supporting methods:
-* [Convert tweet in various inputs into a dictionary](methods.md#convert-to-tweet-dictionary)
+* **nlpru** uses a dictionary method to support the **Topic Analysis** and **Conversation thread** methods. If you want to manually use the dictionary conversion method, you can read [about how to use it here](methods.md#convert-to-tweet-dictionary): 

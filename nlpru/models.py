@@ -31,19 +31,38 @@ def Convert_to_tweet_dictionary(**kwargs):
                 tweet_text_index = kwargs['tweet_text_index']
                 tweet_id_index = kwargs['tweet_id_index']
                 #figure our which indexes have been given and the ones that havent
-                list_of_avail_index = [i for i in range(1,len(tweet_list[0])+1) \
-                                           if i not in [tweet_text_index,tweet_id_index]]
-                other_vars = [[each[i-1] for i in list_of_avail_index] \
-                              for each in tweet_list]
-                return {each[tweet_id_index]:{
-                            'text':each[tweet_text_index],
-                            'other':other_vars} for each in tweet_list
-                            }
+                vars_to_get = [i for i in range(1,len(tweet_list[0])) \
+                                   if i not in [tweet_text_index,tweet_id_index]]
+                d = {}
+                for tweet in tweet_list:
+                    
+                    other_vars = [tweet[i] for i in vars_to_get]
+                    d[tweet[tweet_id_index]] = {
+                            'text':tweet[tweet_text_index],
+                            'other':other_vars}
+                return d
             except Exception as e:
                 raise InputError("Improper tweet_list inputted")
-        else:
-            raise InputError("Improper tweet input, please either input tweet list or tweet dictionary")
+    else:
+        raise InputError("Improper tweet input, please either input tweet list or tweet dictionary")
 
 
 if __name__ == '__main__':
-    pass
+    from pysqlc import DB
+    db = DB('kremlin_tweets_db')
+    q = """
+    SELECT 
+        tmast.twtid,
+        tmast.twttext AS twttext,
+        tmast.userid
+    FROM samp_twts_all_rus_twts_str tsamp 
+        INNER JOIN twt_Master tmast 
+        ON tsamp.twtid=tmast.twtid
+        
+    WHERE tmast.twt_lang='ru'  
+    AND tmast.twt_createdat >= '{start}'
+    AND tmast.twt_createdat < '{end}'
+    """.format(start='2017-03-26', end='2017-03-27')
+    data = list(db.query(q))
+    d = Convert_to_tweet_dictionary(tweet_list=data, tweet_text_index=1, tweet_id_index=0)
+    
