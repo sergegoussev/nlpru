@@ -170,7 +170,7 @@ And the folowing steps:
 from nlpru import Convert_to_tweet_dictionary
 
 tweet_dict = Convert_to_tweet_dictionary(
-    tweet_list=[], 
+    tweet_list=[('tweet id','tweet text','userid or other info...',...),...], 
     tweet_text_index=1,
     tweet_id_index=0)
 ```
