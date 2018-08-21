@@ -24,9 +24,7 @@ def Convert_to_tweet_dictionary(**kwargs):
     elif all(inp in kwargs for inp in tweet_list_reqs):
         #validate that the list errors are correct and if so, construct the dict
         tweet_list = kwargs['tweet_list']
-        if type(tweet_list) is not list:
-            raise InputError("Improper tweet_list inputted")
-        else:
+        if type(tweet_list) == list or type(tweet_list) == tuple:
             try:
                 tweet_text_index = kwargs['tweet_text_index']
                 tweet_id_index = kwargs['tweet_id_index']
@@ -43,6 +41,8 @@ def Convert_to_tweet_dictionary(**kwargs):
                 return d
             except Exception as e:
                 raise InputError("Improper tweet_list inputted")
+        else:
+            raise InputError("Improper tweet_list inputted")
     else:
         raise InputError("Improper tweet input, please either input tweet list or tweet dictionary")
 

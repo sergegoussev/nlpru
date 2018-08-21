@@ -20,26 +20,27 @@ You can install this library via git from github directly:
 
 # quickstart
 
-Once installed, you can call each method you require by importing it from nlpru. For example, let's say you have some tweets to process:
+Once installed, you can call each method you require by importing it from nlpru. For example, let's say you have some tweets to preprocess:
 
 ```python
-#import library
+#import method
 from nlpru import Clean
 
-#initiate the Clean method
+#initiate the method
 c = Clean()
 
 tweet = """п***ц какое расследование,почему б не указать,что наш Самарский ио @D_Azaroff
  ,вот он не бот,можно обратиться напрямую,не откажет"""
 
-print(c.Clean_document(tweet, remove_swears=True))
+#use the method and save its output
+clean_tweet = c.Clean_document(tweet, remove_swears=True)
 ```
 
-This will return: 
+If we print `clean_tweet`, it will return: 
 `"какое расследование, почему б не указать, что наш Самарский ио @DAzaroff, вот он не бот, можно обратиться напрямую, не откажет"`
 
 # documentation and examples
 
-To have a fuller explanation of the availible methods, check out:
+A full overview of the availible methods and examples is availible:
 * [the documentation](docs/README.md)
 * [examples and walkthroughs](examples/README.md)
