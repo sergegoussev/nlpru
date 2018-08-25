@@ -10,7 +10,7 @@ Designed for Python 3.5
 
 *Author*: @sergegoussev
 
-**WIP** -- some feature are not fully buit and tested at this time.
+**WIP** — while all methods work, the library will be expanded with time
 
 # installation
 
@@ -38,6 +38,8 @@ clean_tweet = c.Clean_document(tweet, remove_swears=True)
 
 If we print `clean_tweet`, it will return: 
 `"какое расследование, почему б не указать, что наш Самарский ио @DAzaroff, вот он не бот, можно обратиться напрямую, не откажет"`
+
+The library also offers some useful and simple methods, such as [categorizing topics and taking conversation threads into account](examples/Topic_and_conversation_thread_categorization_simple.ipynb)
 
 # documentation and examples
 

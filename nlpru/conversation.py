@@ -132,23 +132,27 @@ class Conversations:
 if __name__ == '__main__':
     from nlpru import FindTopics
     tweet_dict = {
-                '1':{'text':'вот почему б не указать'},
-                '2':{'text':"наш Самарский расследование"},
-                '3':{'text':"вот он не бот"},
-                '4':{'text':'можно обратиться напрямую'},
-                '5':{'text':"какое расследование"},
-                '6':{'text':'обратиться ... напрямую'},
+                '1':{'text':'вот почему б не указать'},     #on topic by keyword
+                '2':{'text':"наш Самарский расследование"}, #op topic by keyword
+                '3':{'text':"вот он не бот"},               
+                '4':{'text':'можно обратиться напрямую'},   #reply to 1 therefore on topic
+                '5':{'text':"какое расследование"},         #quote to 2, therefore on topic
+                '6':{'text':'обратиться ... напрямую'},     #quoting 4, a reply to topic, therefore on topic
+                '7':{'text':"какое расследование"}          #retweet of 4, a reply to topic, therefore on topic
                 }
     topic_dict = {
-                "topic 1":["почему", "наш"],
-                "topic 2":["расследование","какой"]
+                "topic 1":["почему", "наш"]
                 }
-    replies = [('6','1')]
+    replies = [('4','1')]
+    retweets = [('7','4')]
+    quotes = [('6','1'),('5','2')]
+    
+    
     
     T = FindTopics(tweet_dict=tweet_dict)
     r = T.Keyword_Match(topic_dict)
     
-    c = Conversations(reply_list=replies)
+    c = Conversations(quote_list=quotes, retweet_list=retweets, reply_list=replies)
     t = c.Recategorize_topics(topic_for_which_to_check="topic 1", tweet_dict=tweet_dict)
     
     
