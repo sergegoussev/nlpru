@@ -8,10 +8,12 @@ from nlpru.models import Convert_to_tweet_dictionary
 
 from nltk.tokenize import word_tokenize
 
+
 class FindTopics:
     """
     To detect topics, choose a choise of method, and pass in the required inputs
     """
+
     def __init__(self, **kwargs):
         """
         @parameters: 
@@ -21,7 +23,7 @@ class FindTopics:
                 i.e. 0 for 1st, etc...
             - tweet_id_index -- specify the index of the tweet id (or unique tweet) 
                 identifier.
-            
+
             If you are inputting a dictionary of tweets, then the parameter should be:
             - tweet_dict - dictionary of tweets by twtid as the key
                 - NOTE: the following dict is expected:
@@ -29,8 +31,8 @@ class FindTopics:
         """
         self._Cln = Cleaner()
         self._tweet_dict = Convert_to_tweet_dictionary(**kwargs)
- 
-    #--------Methods-------------------------------------------------------------------------
+
+    # --------Methods-------------------------------------------------------------------------
     def Keyword_Match(self, topic_dict):
         for tweet in self._tweet_dict:
             clean_words = self.__clean_words__(self._tweet_dict[tweet]['text'])
@@ -38,7 +40,7 @@ class FindTopics:
             topic = "none detected"
             num_assigned = 0
             for each_topic in topic_dict:
-#                print(each_topic, tweet)
+                #                print(each_topic, tweet)
                 if len(set(topic_dict[each_topic]).intersection(clean_words)) != 0:
                     topic = each_topic
                     num_assigned += 1
@@ -61,21 +63,20 @@ class FindTopics:
             if result['status'] == 'ok':
                 words.append(result['word'])
         return words
-                
+
 
 if __name__ == '__main__':
     tweet_dict = {
-            '1':{'text':'вот почему б не указать'},
-            '2':{'text':"наш Самарский расследование"},
-            '3':{'text':"вот он не бот"},
-            '4':{'text':'можно обратиться напрямую'},
-            '5':{'text':"какое расследование"}
-            }
+        '1': {'text': 'вот почему б не указать'},
+        '2': {'text': "наш Самарский расследование"},
+        '3': {'text': "вот он не бот"},
+        '4': {'text': 'можно обратиться напрямую'},
+        '5': {'text': "какое расследование"}
+    }
     topic_dict = {
-            "topic 1":["почему", "наш"],
-            "topic 2":["расследование","какой"]
-            }
+        "topic 1": ["почему", "наш"],
+        "topic 2": ["расследование", "какой"]
+    }
     T = FindTopics(tweet_dict=tweet_dict)
     r = T.Keyword_Match(topic_dict)
 #    print(r)
-    

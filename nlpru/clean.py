@@ -3,21 +3,26 @@
 nlpru.clean
 """
 from __future__ import print_function
-import pymorphy2, string, re, emoji, nltk, sys
+import pymorphy2
+import string
+import re
+import emoji
+import nltk
+import sys
 #from nltk import word_tokenize
 from nlpru import stop_words as tsw
 from nltk.corpus import stopwords
 
-#--------------------------
-#create stopwords and lemmatization
+# --------------------------
+# create stopwords and lemmatization
 stop = stopwords.words('russian')
 exclude = list(string.punctuation)
 morph = pymorphy2.MorphAnalyzer()
 for each in tsw.sw:
     exclude.append(each)
-    
+
 swears = tsw.swear_words
-#alphabet + number match - check only russian words and not english
+# alphabet + number match - check only russian words and not english
 ru_alphabet = list(tsw.ru_alphabet)
 en_alphabet = list(tsw.en_alphabet)
 en_alphabet.append('і')
@@ -27,13 +32,15 @@ consonants = list(tsw.ru_consonants)
 emojis = ''.join(each for each in emoji.UNICODE_EMOJI)
 
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
-#--------------------------
+# --------------------------
+
 
 class Cleaner:
     '''
     The Cleaner object works by cleaning a specified piece of text for
     natural language analysis
     '''
+
     def __init__(self, language='ru'):
         if language != 'ru':
             print('Unable to process other languages at this time')
@@ -61,37 +68,38 @@ class Cleaner:
          - remove_mentions
         '''
         doc = input_document
-        #RTs
+        # RTs
         if remove_RTs == True:
-            doc = re.sub('RT (.*?) ','',doc)
+            doc = re.sub('RT (.*?) ', '', doc)
         if remove_hashtags == True:
-            doc = re.sub('#(.+?) ','',doc) #hashtags - in the middle
-            doc = re.sub('#(.+?)$','',doc) #hashtags - in the end      
+            doc = re.sub('#(.+?) ', '', doc)  # hashtags - in the middle
+            doc = re.sub('#(.+?)$', '', doc)  # hashtags - in the end
         if remove_mentions == True:
-            doc = re.sub('@\w* ','',doc) #mentions - in the middle
-            doc = re.sub('@\w*$','',doc) #mentions - in the emd
+            doc = re.sub('@\w* ', '', doc)  # mentions - in the middle
+            doc = re.sub('@\w*$', '', doc)  # mentions - in the emd
         if remove_urls == True:
-            doc = re.sub('http(.+?) ','',doc) #urls in the middle of the tweet
-            doc = re.sub('http(.+?)$','',doc) #urls at the end of the tweet
-            doc = re.sub('http(.+?)\n','',doc) #urls in the middle of the tweet
+            # urls in the middle of the tweet
+            doc = re.sub('http(.+?) ', '', doc)
+            doc = re.sub('http(.+?)$', '', doc)  # urls at the end of the tweet
+            # urls in the middle of the tweet
+            doc = re.sub('http(.+?)\n', '', doc)
         if remove_emoji == True:
-            doc = re.sub(emojis, '', doc) #emojis version
+            doc = re.sub(emojis, '', doc)  # emojis version
         if remove_swears == True:
-            doc = re.sub('твою мать','',doc, re.IGNORECASE)
+            doc = re.sub('твою мать', '', doc, re.IGNORECASE)
             for swear in swears:
                 doc = re.sub(swear, '', doc, re.IGNORECASE)
         if remove_special_chars == True:
-            doc = re.sub("""[→©ђ°ѓ¡|\|=/▶►‼?~é̄̃`«»;џ�_●▪™“„#ї*&%¿$\-\”<>'|/?~`\+\：«»;_“„&^№€…)(—]""",'',doc)
-        doc = re.sub('\n','.', doc) #remove white spaces, i.e. new lines  
-        #validate that spaces that should exist actually exist
-        for character in [',',r'\.',r'\?',r'!',r':',r';']:
+            doc = re.sub(
+                """[→©ђ°ѓ¡|\|=/▶►‼?~é̄̃`«»;џ�_●▪™“„#ї*&%¿$\-\”<>'|/?~`\+\：«»;_“„&^№€…)(—]""", '', doc)
+        doc = re.sub('\n', '.', doc)  # remove white spaces, i.e. new lines
+        # validate that spaces that should exist actually exist
+        for character in [',', r'\.', r'\?', r'!', r':', r';']:
             doc = re.sub(' '+character, character, doc)
             doc = re.sub(character, character+' ', doc)
-        doc = re.sub(' +',' ', doc) #remove extra spaces
+        doc = re.sub(' +', ' ', doc)  # remove extra spaces
         doc = doc.strip()
         return doc
-
-
 
     def Check_word(self,
                    word,
@@ -134,18 +142,18 @@ class Cleaner:
                 result['word'] = ''
                 result['status'] = 'empty'
             if exclude_english_words == True and \
-               len(set(word.lower()).intersection(set(en_alphabet)))> 0:
+               len(set(word.lower()).intersection(set(en_alphabet))) > 0:
                 result['word'] = ''
                 result['status'] = 'empty'
-            if lemmatize==True:
+            if lemmatize == True:
                 word = morph.normal_forms(result['word'])[0]
                 result['word'] = word
-                if len(word)>0:
-                    result['status']='ok'
+                if len(word) > 0:
+                    result['status'] = 'ok'
                 else:
-                    result['status']='empty'
-            if remove_proper_nouns==True:
-                if len(nltk.pos_tag([result['word']])[0])>0:
+                    result['status'] = 'empty'
+            if remove_proper_nouns == True:
+                if len(nltk.pos_tag([result['word']])[0]) > 0:
                     if nltk.pos_tag([result['word']])[0][1] == 'NNP' or \
                        nltk.pos_tag([result['word']])[0][1] == 'NNPS':
                         result['word'] = ''
@@ -154,12 +162,11 @@ class Cleaner:
                (result['word'] in exclude):
                 result['word'] = ''
                 result['status'] = 'empty'
-               
+
         else:
             result['word'] = ''
-            result['status'] = 'empty'     
+            result['status'] = 'empty'
         return result
-                
 
 
 if __name__ == '__main__':
@@ -168,4 +175,3 @@ if __name__ == '__main__':
     """
     tweet2 = "п***ц какое расследование,почему"
     print(C.Clean_document(tweet, remove_swears=True, remove_mentions=False))
-    
