@@ -8,6 +8,8 @@ The following walks through the methods availible
 
 If you want to determine *cosine similarity* between documents, you can use this method. You can use this for two tweets, two sets of tweets concatenated into 2 strings, or really any 2 string objects. The method underlying it is tf-idf.
 
+<details><summary>See Python example</summary>
+
 ```python
 from nlpru import Similarity
 s = Similiarity()
@@ -16,16 +18,26 @@ docs = [doc1, doc2]
 print(s.Get_similarity(doc))
 ```
 
+</details>
+
 ## Preprocessing
 
 Clean allows the preprocessing of text, with two methods availible: one to clean the document (i.e. the tweet or post), and another to check whether a word should be included in subsequent bag-of-words analysis -- to remove stop words, emojis, etc.
 
 **Clean_document**
+
+This method takes a tweet and cleans it by removing from it Twitter perticulars, such as `RT` or `@username` symbols.
+
+<details><summary>See Python example</summary>
+
 ```python
 raw = "Все говорят забудь его, забудь... а вот вы можете ..."
 c.Clean_document(raw)
 #"Все говорят забудь его забудь а вот вы можете"
 ```
+
+</details>
+
 Parameters with defaults:
 * remove_RTs = True
 * remove_hashtags = True
@@ -38,6 +50,8 @@ Parameters with defaults:
 
 **Check_word**
 
+The method validates whether a specific word can be used for analysis
+
 ```python
 from nltk.tokenize import word_tokenize 
 raw = "Все говорят забудь его, забудь... а вот вы можете ..."
@@ -47,8 +61,11 @@ for word in word_tokenize(raw):
 ```
 
 Check_word returns a dictionary with a logical test: 
-```javascript
-{'status':'ok OR empty','word':'clean word if applicable or NA'}
+```json
+{
+    "status": "ok OR empty",
+    "word": "clean word if applicable or NA"
+}
 ```
 
 For example:
@@ -76,7 +93,34 @@ To assign tweets topics, you can specify the keywords you want to categorize a t
 
 @input parameters for method:
 * **dictionary_of_topics** -- specify the topics as dictionary keys and keywords as values for each topic you wish to categorize. For ex:
-    * `topic_dict = {'protests':['navalny','putin'],'assasination':['voronenkov']}`
+
+    <details><summary>See example of topic dictionary</summary>
+
+    ```json
+    topic_dict = {
+        "topic 1": {
+            "contains": [
+                "word1",
+                "word2"
+            ],
+            "not": [
+                "word3"
+            ]
+        },
+        "topic 2": {
+            "contains": [
+                "word4",
+                "word5"
+            ]
+        },
+        "topic 3": [
+            "word6",
+            "word7"
+        ]
+    }
+    ```
+
+    </details>
 * Enter the tweets you would like to convert: 
     * **tweet_dict** -- dictionary of tweets and tweet text;
     * or you could input tweets as a list, hence you should have the following inputs:
@@ -86,22 +130,24 @@ To assign tweets topics, you can specify the keywords you want to categorize a t
         * For more information on these inputs, see the [**tweet dictionary** construction method](#convert-to-tweet-dictionary) to convert the input into a dictionary.
     
 
-For example: 
+<details><summary>See Python example</summary>
 
 ```python
 from nlpru import FindTopics
 
 tweet_dict = {
-            '1':{'text':'вот почему б не указать'},
-            '2':{'text':"наш Самарский расследование"},
-            '3':{'text':"вот он не бот"},
-            '4':{'text':'можно обратиться напрямую'},
-            '5':{'text':"какое расследование"}
-            }
+    '1': {'text': 'вот почему б не указать'},
+    '2': {'text': "наш Самарский расследование"},
+    '3': {'text': "вот он наш не бот"},
+    '4': {'text': 'можно обратиться напрямую'},
+    '5': {'text': "какое расследование"}
+}
+
 topic_dict = {
-            "topic 1":["почему", "наш"],
-            "topic 2":["расследование","какой"]
-            }
+    "topic 1": {'contains':["почему", "наш"],'not':['бот']},
+    "topic 2": {'contains':["расследование", "какой"]},
+    "topic 3": ['бот']
+}
 
 #first call the overall method and give it the tweets as input
 T = FindTopics(tweet_dict=tweet_dict) 
@@ -110,6 +156,56 @@ T = FindTopics(tweet_dict=tweet_dict)
 r = T.Keyword_Match(topic_dict)
 ```
     
+This will yield a result of the following categories:
+
+```json
+{
+    "1": {
+        "text": "вот почему б не указать",
+        "clean_words": [
+            "почему",
+            "указать"
+        ],
+        "topic": "topic 1"
+    },
+    "2": {
+        "text": "наш Самарский расследование",
+        "clean_words": [
+            "наш",
+            "самарский",
+            "расследование"
+        ],
+        "topic": "applies to 2 topics"
+    },
+    "3": {
+        "text": "вот он наш не бот",
+        "clean_words": [
+            "наш",
+            "бот"
+        ],
+        "topic": "topic 3"
+    },
+    "4": {
+        "text": "можно обратиться напрямую",
+        "clean_words": [
+            "обратиться",
+            "напрямую"
+        ],
+        "topic": "none detected"
+    },
+    "5": {
+        "text": "какое расследование",
+        "clean_words": [
+            "какой",
+            "расследование"
+        ],
+        "topic": "topic 2"
+    }
+}
+```
+
+</details>
+
 ## Add conversation affects to topics
 
 As tweets are not isolated in spacce but are usually part of a conversation thread, often with other tweets in a thread not using the listened to keywords, you can use this method to include conversation thread affects and categorize all *downstream* tweets as also on the parent tweet topic. 
@@ -146,13 +242,15 @@ For a full walkthrouh of the reasons why conversation thread affects need to be 
 
 **nlpru** uses a dictionary method to process tweets -- both to categorize the **topics** and to assess **conversation thread** affects. For this it uses a dictionary structure:
 
-```
+```json
 tweet_dict {
-    'tweet id': {
-        'text':'tweet text is stored here',
-        'other':['other vars are stored in a list here']
-        }  
+    "tweet id": {
+        "text": "tweet text is stored here",
+        "other": [
+            "other vars are stored in a list here"
+        ]
     }
+}
 ```
 
 If you want to utilize the method manually, you require:
@@ -170,7 +268,8 @@ And the folowing steps:
 from nlpru import Convert_to_tweet_dictionary
 
 tweet_dict = Convert_to_tweet_dictionary(
-    tweet_list=[('tweet id','tweet text','userid or other info...',...),...], 
+    tweet_list=[('tweet id', 'tweet text',
+                 'userid or other info...', ...), ...],
     tweet_text_index=1,
     tweet_id_index=0)
 ```

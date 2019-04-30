@@ -142,7 +142,7 @@ if __name__ == '__main__':
         '1': {'text': 'вот почему б не указать'},  # on topic by keyword
         # op topic by keyword
         '2': {'text': "наш Самарский расследование"},
-        '3': {'text': "вот он не бот"},
+        '3': {'text': "вот он наш не бот"},
         # reply to 1 therefore on topic
         '4': {'text': 'можно обратиться напрямую'},
         # quote to 2, therefore on topic
@@ -153,7 +153,8 @@ if __name__ == '__main__':
         '7': {'text': "какое расследование"}
     }
     topic_dict = {
-        "topic 1": ["почему", "наш"]
+        "topic 1": {'contains': ["почему", "наш"], 'not': ['бот']},
+        "topic 2": ['бот']
     }
     replies = [('4', '1')]
     retweets = [('7', '4')]
@@ -166,3 +167,6 @@ if __name__ == '__main__':
                       retweet_list=retweets, reply_list=replies)
     t = c.Recategorize_topics(
         topic_for_which_to_check="topic 1", tweet_dict=tweet_dict)
+
+
+
