@@ -65,7 +65,6 @@ class FindTopics:
         topic_dict = self.__validate_topic_dict_construction__(topic_dict)
         #iterate through the topics inputted
         for tweet in self._tweet_dict:
-            print("="*30,tweet)
             #clean each word in the tweet (tokenize, lemmatize, etc)
             clean_words = self.__clean_words__(self._tweet_dict[tweet]['text'])
             self._tweet_dict[tweet]['clean_words'] = clean_words
@@ -75,12 +74,6 @@ class FindTopics:
             for each_topic in topic_dict:
                 #if keywords match those that 'contains' and NOT those 'not', 
                 #categorize the tweet by topic
-                print("-"*10,each_topic,"-"*10)
-                print(topic_dict[each_topic]['contains'])
-                print(clean_words)
-                print(len(set(topic_dict[each_topic]['contains']).intersection(clean_words)))
-                print(len(set(topic_dict[each_topic]['not']).intersection(clean_words)))
-                
                 if len(set(topic_dict[each_topic]['contains']).intersection(clean_words)) != 0:
                     if len(set(topic_dict[each_topic]['not']).intersection(clean_words)) == 0:
                         topic = each_topic
@@ -107,12 +100,10 @@ class FindTopics:
                         topic_dict[each_topic] = {'contains':temp_list}
                     else:
                         raise TopicModelError("improper topic dictionary construction, 'conains' missing")
-#                print(topic_dict)
                 if 'not' not in topic_dict[each_topic]:
                     topic_dict[each_topic]['not'] = []
             except Exception as e:
                 raise TopicModelError("Error in validating topic_dict: {}".format(e))
-        print(topic_dict)
         return topic_dict
 
     def __clean_words__(self, document):
