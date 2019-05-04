@@ -1,4 +1,4 @@
- [Home](../README.md) | [Documentation](../docs/README.md) |  [Methods](../docs/methods.md) | Examples
+ [Home](../README.md) | [Documentation](https://sergegoussev.github.io/nlpru-docs/) | Examples
 
 # Examples and explantions of the library
 

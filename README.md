@@ -1,4 +1,4 @@
-Home | [Documentation](docs/README.md) | [Methods](docs/methods.md) | [Examples](examples/README.md)
+Home | [Documentation](https://sergegoussev.github.io/nlpru-docs/) | [Examples](examples/README.md)
 
 # nlpru
 
@@ -44,5 +44,5 @@ The library also offers some useful and simple methods, such as [categorizing to
 # documentation and examples
 
 A full overview of the availible methods and examples is availible:
-* [the documentation](docs/README.md)
+* [the documentation](https://sergegoussev.github.io/nlpru-docs/)
 * [examples and walkthroughs](examples/README.md)
