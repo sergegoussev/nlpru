@@ -132,7 +132,7 @@ class Semantics:
                        use_ngrams=True):
         """
         Get cosine similarity of documents. Uses sklearn's library and the 
-        tf-idf approach (TfidfVectorizer()) to calcluate result
+        tf-idf approach (TfidfVectorizer()) to calculate result
 
         (unique) params:
             - stop_words: list (or set) of stop words to use
