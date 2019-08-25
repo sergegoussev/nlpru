@@ -91,7 +91,7 @@ class Cleaner:
                 doc = re.sub(swear, '', doc, re.IGNORECASE)
         if remove_special_chars == True:
             doc = re.sub(
-                """[→©ђ°ѓ¡|\|=/▶►‼?~é̄̃`«»;џ�_●▪™“„#ї*&%¿$\-\”<>'|/?~`\+\：«»;_“„&^№€…)(—]""", '', doc)
+                """[→©ђ°ѓ¡|\|=/\\▶►‼?~é̄̃`«»;џ�_●▪™“„#ї*&%¿$\-\”<>'|/?~`\+\：«»;_“„&^№€…)(—]""", '', doc)
         doc = re.sub('\n', '.', doc)  # remove white spaces, i.e. new lines
         # validate that spaces that should exist actually exist
         for character in [',', r'\.', r'\?', r'!', r':', r';']:

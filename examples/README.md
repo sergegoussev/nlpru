@@ -10,5 +10,6 @@ The following examples/walkthroughs can help understand the library and how it w
 **Full walkthroughs and real data applications**:
 * [Categorizing tweets by topic](nlpru_topic_categorization_walkthrough.ipynb) -- use keywords to find which tweets can be categorized as about a topic
 * [Categorizing tweets by topic, but also adding conversation thread effects to topic modeling](Categorizing_by_topic_using_conversation_threads.ipynb) -- walkthrough why simple topic categorzation is not enough
+* [Example calculating semantic similarity](Examples_of_semantic_similarity.ipynb)
 
 For more information on the data collected and used in these examples, see our paper [*"Kremlin Tweets: the politics of social media and the quest for legitimacy in Putin’s Russia"*](https://www.rudatalab.com/analysis/).
